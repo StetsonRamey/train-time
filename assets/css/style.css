@@ -1,1 +1,29 @@
+body {
+  background-image: url("../images/72621-high-speed-train.png");
+  background-size: 250px auto;
+}
 
+.jumbotron {
+  background-color: white;
+  border: 1px solid gray;
+}
+
+#train-schedule {
+  margin: 25px 0;
+}
+
+#train-add {
+  margin: 25px 0;
+}
+
+#submitBtn {
+  background: white;
+  color: gray;
+  border: 1px solid gray;
+  padding: 1% 10%;
+}
+
+#submitBtn:hover {
+  color: white;
+  background: gray;
+}
