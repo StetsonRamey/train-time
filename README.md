@@ -6,7 +6,7 @@ Updated the portfolio page with link as well
 
 [Portfolio Page][1]
 
-[GifTastic Game Page][2]
+[Train Time Page][2]
 
 [1]: https://stetsonramey.github.io/Responsive-Portfolio/portfolio.html
 [2]: https://stetsonramey.github.io/train-time/
