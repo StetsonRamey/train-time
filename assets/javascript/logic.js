@@ -9,11 +9,15 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// make firebase database easier to work with
 var database = firebase.database();
 
+// on click function
 $('#submitBtn').on('click', function() {
+  // prevent default behavior
   event.preventDefault();
 
+  // line up our variables
   var name;
   var destination;
   var firstTrainTime;
@@ -21,6 +25,7 @@ $('#submitBtn').on('click', function() {
   var nextTrain;
   var minutesAway;
 
+  // get user input
   name = $('#trainName').val().trim();
   destination = $('#destination').val().trim();
   departureTime = $('#departureTime').val().trim();
@@ -32,29 +37,23 @@ $('#submitBtn').on('click', function() {
   console.log(departureTime);
   console.log(frequency);
 
-  // TODO: calc next arrival here
+  // DONE: calc next arrival here
   var firstTrainConverted = moment(departureTime, "HH:mm").subtract(1, "years");
-  console.log(firstTrainConverted);
 
   var currentTime = moment();
 
   var diffTime = currentTime.diff(firstTrainConverted, "minutes");
-  console.log(diffTime);
 
   var tRemainder = diffTime % frequency;
-  console.log(tRemainder);
 
   var tMinutesTillTrain = frequency - tRemainder;
-  console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
   var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-  console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
-  // TODO: calc minutes away here
+  // DONE: calc minutes away here
   var minutesAway = nextTrain.diff(currentTime, "minutes");
-  console.log("Minutes away: " + minutesAway);
 
-  // TODO: push into database here
+  // DONE: push into database here
   database.ref().push({
     name: name,
     destination: destination,
@@ -70,19 +69,20 @@ $('#submitBtn').on('click', function() {
 // DONE: add watcher - don't do limitToLast(1)
 database.ref().on("child_added", function(childSnapshot) {
 
-  // TODO: push into the html card
+  // DONE: push into the html card
   var sv = childSnapshot.val();
 
-  var nextTrainFormatted = moment(sv.nextTrain).format("hh:mm");
+  var nextTrainFormatted = moment(sv.nextTrain).format("hh:mm A");
 
   // testing
   // console.log(sv.name);
   // console.log(sv.destination);
   // console.log(sv.departureTime);
   // console.log(sv.frequency);
-  console.log("next train from firebase: " + sv.nextTrain);
+  // console.log("next train from firebase: " + sv.nextTrain);
   // console.log(sv.minutesAway);
 
+  // variable to hold html
   var html =
     '<tr class="something">' +
     '<td>' + sv.name + '</td>' +
@@ -92,6 +92,7 @@ database.ref().on("child_added", function(childSnapshot) {
     '<td>' + sv.minutesAway + '</td>' +
     '</tr>';
 
+  // push the html to hte page
   $('#outPutRow').append(html);
 
   // DONE: handle the errors
